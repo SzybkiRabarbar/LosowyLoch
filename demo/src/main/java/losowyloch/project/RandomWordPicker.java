@@ -35,6 +35,17 @@ public class RandomWordPicker {
         }
     }
 
+    private static String capitalizeEachWord(String original) {
+        String[] words = original.split(" ");
+        StringBuilder capitalized = new StringBuilder();
+
+        for (String word : words) {
+            String firstLetter = word.substring(0, 1).toUpperCase();
+            String restOfWord = word.substring(1).toLowerCase();
+            capitalized.append(firstLetter).append(restOfWord).append(" ");
+        }
+        return capitalized.toString().trim();
+    }
 
     public static String[] getRandomWords(char c) {
         List<String> adjectives;
@@ -65,6 +76,6 @@ public class RandomWordPicker {
         }
         String adjective = adjectives.get(random.nextInt(adjectives.size()));
         String noun = nouns.get(random.nextInt(nouns.size()));
-        return new String[]{adjective, noun};
+        return new String[]{capitalizeEachWord(adjective), capitalizeEachWord(noun)};
     }
 }
