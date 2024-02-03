@@ -33,8 +33,8 @@ public class Menu {
             case '2':
                 System.out.println("Tworzenie postaci!\n");
                 PlayerCreator playerCreator = new PlayerCreator();
-                Player player = playerCreator.create();
-                players.add(player);
+                // Player player = playerCreator.create();
+                // players.add(player);
                 // TODO start game
                 break;
             case '3':

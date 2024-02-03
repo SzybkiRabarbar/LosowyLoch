@@ -1,11 +1,19 @@
 package losowyloch.project.entities.creators;
 
 import losowyloch.project.entities.Player;
+import losowyloch.project.UiHelper;
 
 public class PlayerCreator {
-    public PlayerCreator() {}
+    private UiHelper ui;
+    public PlayerCreator() {
+        this.ui = new UiHelper();
+    }
 
-    public Player create() {
-        // TODO
+    private String pickName() {
+        return "";
+    }
+
+    public void create() { 
+        // TODO ma zwracać player
     }
 }
