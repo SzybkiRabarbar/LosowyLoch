@@ -8,7 +8,7 @@ import losowyloch.project.skills.Skill;
 import losowyloch.project.RandomWordPicker;
 
 public class SkillCreator {
-    private String[] attackNouns = new String[]{
+    private static String[] attackNouns = new String[]{
         "Atak", "Strzał", "Cios",
         "Zadzior", "Wybuch", "Rozbłysk",
         "Piorun", "Fala", "Zamach",
@@ -17,7 +17,7 @@ public class SkillCreator {
         "Wir", "Eksplozja", "Sztorm",
         "Meteoryt", "Lawina",
     };
-    private boolean[] attackGender = new boolean[]{
+    private static boolean[] attackGender = new boolean[]{
         true, // Atak
         true, // Strzał
         true, // Cios

@@ -26,7 +26,7 @@ class EffectCreator {
         }
         int affects = random.nextInt(6);
         int bound = this.lvl > 20 ? 20 : this.lvl; 
-        int power = random.nextInt(bound) + 1 * mult;
+        int power = (random.nextInt(bound) + 1) * mult;
         return new Effect(target, affects, power);
     }
 }

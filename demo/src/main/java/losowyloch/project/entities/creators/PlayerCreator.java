@@ -1,6 +1,9 @@
 package losowyloch.project.entities.creators;
 
 import losowyloch.project.entities.Player;
+import losowyloch.project.skills.Skill;
+import losowyloch.project.skills.creators.SkillCreator;
+
 import losowyloch.project.RandomWordPicker;
 import losowyloch.project.UiHelper;
 
@@ -30,13 +33,38 @@ public class PlayerCreator {
         }
     }
 
+    private void addSkills(Player player) {
+        SkillCreator skillCreator = new SkillCreator(player.getLvl(), 0);
+        System.out.println("Wybór umiejętności!\n");
+        Skill[] currSkills = new Skill[6];
+        String[] currMsgs = new String[6];
+
+        for (int i = 0; i < 3; i++) {
+            int showNumber = i + 1;
+            System.out.println("Wybierz " + showNumber + " z 3 umiejętności z listy:\n");
+
+            for (int j = 0; j < 6; j++) {
+                Skill currSkill = skillCreator.create();
+                currSkills[j] = currSkill;
+                currMsgs[j] = "(" + j + ") " + currSkill.getInfo();
+            }
+            char input = ui.showAndCollectInput(currMsgs, "012345".toCharArray());
+            Skill pickedSkill = currSkills[input - '0'];
+            System.out.println("Wybrałeś " + pickedSkill.getName() + "!\n");
+
+            player.addSkill(pickedSkill);
+        }
+    }
+
     public Player create() { 
-        System.out.println("Wybierz imię dla swojej postaci");;
+        System.out.println("Wybierz imię dla swojej postaci");
         String name = this.pickName();
         System.out.println("Wybrane Imie to " + name + "!\n");
+
         Player player = new Player(name, new int[]{1,1,1,1,1,1,1}, 0);
-        // TODO dodawanie skilli
+
         this.addPoints(player);
+        this.addSkills(player);
         return player;
     }
 }
