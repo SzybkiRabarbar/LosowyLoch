@@ -9,7 +9,7 @@ import losowyloch.project.skills.Skill;
 
 class Entity {
     private String name;
-    private int lvl = 1;
+    private int lvl = 3;
     private int strength;
     private int intellect;
     private int agility;
@@ -29,13 +29,14 @@ class Entity {
         this.defence = vals[4];
         this.endurance = vals[5];
         this.luck = vals[6];
-        statMethods.put('s', new Pair<>(this::getStrength, this::setStrength));
-        statMethods.put('i', new Pair<>(this::getIntellect, this::setIntellect));
-        statMethods.put('a', new Pair<>(this::getAgility, this::setAgility));
-        statMethods.put('v', new Pair<>(this::getVitality, this::setVitality));
-        statMethods.put('d', new Pair<>(this::getDefence, this::setDefence));
-        statMethods.put('e', new Pair<>(this::getEndurance, this::setEndurance));
-        statMethods.put('l', new Pair<>(this::getLuck, this::setLuck));
+        this.statMethods = new HashMap<>();
+        this.statMethods.put('s', new Pair<>(this::getStrength, this::setStrength));
+        this.statMethods.put('i', new Pair<>(this::getIntellect, this::setIntellect));
+        this.statMethods.put('a', new Pair<>(this::getAgility, this::setAgility));
+        this.statMethods.put('v', new Pair<>(this::getVitality, this::setVitality));
+        this.statMethods.put('d', new Pair<>(this::getDefence, this::setDefence));
+        this.statMethods.put('e', new Pair<>(this::getEndurance, this::setEndurance));
+        this.statMethods.put('l', new Pair<>(this::getLuck, this::setLuck));
 
     }
     

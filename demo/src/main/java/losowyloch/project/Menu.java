@@ -24,11 +24,10 @@ public class Menu {
             "Wypisz cyfre od 1 do 4:",
         };
         char[] validInputs = {'1', '2', '3', '4'};
-        char input = ui.collectInput(msgs, validInputs);
+        char input = ui.showAndCollectInput(msgs, validInputs);
         switch (input) {
             case '1':
-                // TODO
-                System.out.println("Test 1");
+                // TODO lista postaci z json
                 break;
             case '2':
                 System.out.println("Tworzenie postaci!\n");

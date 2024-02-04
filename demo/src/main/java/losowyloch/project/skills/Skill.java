@@ -21,6 +21,17 @@ public class Skill {
     }
 
     // GETTERS
+    public String getInfo() {
+        int[] damage = this.getDamage();
+        String effectsInfo = "";
+        for (Effect eff : effects) {
+            effectsInfo += "  " + eff.getInfo() + "\n";
+        }    
+        return this.name + "\n" +
+               "Ilość użyć: " + this.charges + "\n" +
+               "Obrażenia: " + damage[0] + "-" + damage[1] + "\n" +
+               "Efekty:\n" + effectsInfo;
+    }
     public String getName() {
         return name;
     }
