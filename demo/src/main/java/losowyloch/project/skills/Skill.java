@@ -25,12 +25,12 @@ public class Skill {
         int[] damage = this.getDamage();
         String effectsInfo = "";
         for (Effect eff : effects) {
-            effectsInfo += "  " + eff.getInfo() + "\n";
+            effectsInfo += "\n  " + eff.getInfo();
         }    
         return this.name + "\n" +
                "Ilość użyć: " + this.charges + "\n" +
                "Obrażenia: " + damage[0] + "-" + damage[1] + "\n" +
-               "Efekty:\n" + effectsInfo;
+               "Efekty:" + effectsInfo;
     }
     public String getName() {
         return name;

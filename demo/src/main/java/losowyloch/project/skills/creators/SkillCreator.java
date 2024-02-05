@@ -52,7 +52,7 @@ public class SkillCreator {
         int randIndex = random.nextInt(attackNouns.length);
         char gender = attackGender[randIndex] ? 'm' : 'w';
         String adjective = RandomWordPicker.getRandomWords(gender)[0];
-        return adjective + attackNouns[randIndex];
+        return adjective + " " + attackNouns[randIndex];
     }
 
     private int[] createDamage() {

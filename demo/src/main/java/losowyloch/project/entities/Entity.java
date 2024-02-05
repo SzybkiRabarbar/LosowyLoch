@@ -19,6 +19,12 @@ class Entity {
     private int luck;
     private ArrayList<Skill> skills = new ArrayList<>();
     private HashMap<Character, Pair<Supplier<Integer>, Consumer<Integer>>> statMethods;
+    private static String[] statNames = new String[] {
+        "Siła", "Inteligencja", "Zwinność",
+        "Witalność", "Obrona", "Wytrzymałość",
+        "Szczęście"
+    };
+    private static char[] statLabels = "siavdel".toCharArray();
 
     public Entity(String name, int[] vals) {
         this.name = name;
@@ -57,6 +63,30 @@ class Entity {
         return result;
     }
 
+    public String[] getStatsInfo(boolean print) {
+        String[] statsInfo = new String[7];
+        for (int i = 0; i < statLabels.length; i++) {
+            int statNumber = this.getStatMethods().get(statLabels[i]).getKey().get();
+            String str = statNames[i] + ": " + statNumber;
+            if (print) { System.out.println(str); }
+            statsInfo[i] = "(" + statLabels[i] + ") " + str;
+        }
+        return statsInfo;
+    }
+
+    public String[] getSkillsInfo(boolean print) {
+        int ln = this.skills.size();
+        String[] skillsInfo = new String[ln];
+        for (int i = 0; i < ln; i++) {
+            Skill currSkill = skills.get(i);
+            skillsInfo[i] = "\n" + currSkill.getInfo();
+            if (print) {
+                System.out.println(skillsInfo[i]);
+            }
+        }
+        return skillsInfo;
+    }
+
     // SETTERS
     public void setLvl(int lvl) {
         this.lvl = lvl;
@@ -84,6 +114,12 @@ class Entity {
     }
 
     // GETTERS
+    public char[] getStatLabels() {
+        return statLabels;
+    }
+    public String[] getStatNames() {
+        return statNames;
+    }
     public HashMap<Character, Pair<Supplier<Integer>, Consumer<Integer>>> getStatMethods() {
         return statMethods;
     }
