@@ -46,7 +46,7 @@ public class PlayerCreator {
             for (int j = 0; j < 6; j++) {
                 Skill currSkill = skillCreator.create();
                 currSkills[j] = currSkill;
-                currMsgs[j] = "(" + j + ") " + currSkill.getInfo();
+                currMsgs[j] = "\n(" + j + ") " + currSkill.getInfo();
             }
             char input = ui.showAndCollectInput(currMsgs, "012345".toCharArray());
             Skill pickedSkill = currSkills[input - '0'];

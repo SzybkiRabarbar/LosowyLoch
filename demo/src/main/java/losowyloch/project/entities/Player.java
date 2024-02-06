@@ -9,15 +9,9 @@ public class Player extends Entity {
     private int exp = 0;
     private int expThreshold = 1;
     private int currency = 0;
-    private float glory = 0;
+    private int glory = 0;
     private ArrayList<Mod> mods = new ArrayList<>();
     private UiHelper ui = new UiHelper();
-    private String[] statNames = new String[] {
-        "Siła", "Inteligencja", "Zwinność",
-        "Witalność", "Obrona", "Wytrzymałość",
-        "Szczęście"
-    };
-    private char[] statLabels = "siavdel".toCharArray();
 
     public Player(String name, int[] vals, int id) {
         super(name, vals);
@@ -30,7 +24,7 @@ public class Player extends Entity {
 
     public void addMod(Mod mod) {
         mods.add(mod);
-        ArrayList<Character> statChars = mod.getStatNames();
+        ArrayList<Character> statChars = mod.getStatAffect();
         ArrayList<Integer> statVals = mod.getStatVals();
         for (int i = 0; i < statChars.size(); i++) {
             Character statChar = statChars.get(i);
@@ -42,7 +36,7 @@ public class Player extends Entity {
 
     private void removeMod(Mod mod){
         mods.remove(mod);
-        ArrayList<Character> statChars = mod.getStatNames();
+        ArrayList<Character> statChars = mod.getStatAffect();
         ArrayList<Integer> statVals = mod.getStatVals();
         for (int i = 0; i < statChars.size(); i++) {
             Character statChar = statChars.get(i);
@@ -87,23 +81,37 @@ public class Player extends Entity {
     }
 
     public void addStat() {
-        String[] statsInfo = this.showStats(false);
+        String[] statsInfo = this.getStatsInfo(false);
         System.out.println("Dodaj punkt do statystyk z listy!");
-        char picked = ui.showAndCollectInput(statsInfo, statLabels);
+        char picked = ui.showAndCollectInput(statsInfo, getStatLabels());
         int statNumber = this.getStatMethods().get(picked).getKey().get();
         this.getStatMethods().get(picked).getValue().accept(statNumber + 1);
         System.out.println("Dodano punkt do (" + picked + ")\n");
     }
 
-    public String[] showStats(boolean print) {
-        String[] statsInfo = new String[7];
-        for (int i = 0; i < statLabels.length; i++) {
-            int statNumber = this.getStatMethods().get(statLabels[i]).getKey().get();
-            String str = statNames[i] + ": " + statNumber;
-            if (print) { System.out.println(str); }
-            statsInfo[i] = "(" + statLabels[i] + ") " + str;
+    public void addGlory(int number) {
+        this.glory += number;
+    }
+
+    public String[] getModsInfo(boolean print) {
+        String[] modsInfo = new String[mods.size()];
+        for (int i = 0; i < modsInfo.length; i++) {
+            modsInfo[i] = mods.get(i).getInfo();
+            if (print) {
+                System.out.println(modsInfo[i]);
+            }
         }
-        return statsInfo;
+        return modsInfo;
+    }
+    public void showInfo(){
+        System.out.println(getName());
+        System.out.println("\nStatystyki:");
+        this.getStatsInfo(true);
+        System.out.println("\nUlepszenia:");
+        this.getModsInfo(true);
+        System.out.println("\nUmiejętności:");
+        this.getSkillsInfo(true);
+        System.out.println("\n");
     }
 
     // GETTERS
@@ -116,7 +124,7 @@ public class Player extends Entity {
     public int getCurrency() {
         return currency;
     }
-    public float getGlory() {
+    public int getGlory() {
         return glory;
     }
 }

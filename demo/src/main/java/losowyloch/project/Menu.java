@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import losowyloch.project.entities.Player;
 import losowyloch.project.entities.creators.PlayerCreator;
+import losowyloch.project.managers.GameManager;
 
 public class Menu {
     private ArrayList<Player> players;
@@ -34,7 +35,8 @@ public class Menu {
                 PlayerCreator playerCreator = new PlayerCreator();
                 Player player = playerCreator.create();
                 players.add(player);
-                // TODO start game
+                GameManager gameManager = new GameManager(player);
+                gameManager.mainLoop();
                 break;
             case '3':
                 // TODO
