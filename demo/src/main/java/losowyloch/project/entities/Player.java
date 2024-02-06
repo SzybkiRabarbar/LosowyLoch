@@ -24,7 +24,7 @@ public class Player extends Entity {
 
     public void addMod(Mod mod) {
         mods.add(mod);
-        ArrayList<Character> statChars = mod.getStatNames();
+        ArrayList<Character> statChars = mod.getStatAffect();
         ArrayList<Integer> statVals = mod.getStatVals();
         for (int i = 0; i < statChars.size(); i++) {
             Character statChar = statChars.get(i);
@@ -36,7 +36,7 @@ public class Player extends Entity {
 
     private void removeMod(Mod mod){
         mods.remove(mod);
-        ArrayList<Character> statChars = mod.getStatNames();
+        ArrayList<Character> statChars = mod.getStatAffect();
         ArrayList<Integer> statVals = mod.getStatVals();
         for (int i = 0; i < statChars.size(); i++) {
             Character statChar = statChars.get(i);
@@ -87,6 +87,31 @@ public class Player extends Entity {
         int statNumber = this.getStatMethods().get(picked).getKey().get();
         this.getStatMethods().get(picked).getValue().accept(statNumber + 1);
         System.out.println("Dodano punkt do (" + picked + ")\n");
+    }
+
+    public void addGlory(int number) {
+        this.glory += number;
+    }
+
+    public String[] getModsInfo(boolean print) {
+        String[] modsInfo = new String[mods.size()];
+        for (int i = 0; i < modsInfo.length; i++) {
+            modsInfo[i] = mods.get(i).getInfo();
+            if (print) {
+                System.out.println(modsInfo[i]);
+            }
+        }
+        return modsInfo;
+    }
+    public void showInfo(){
+        System.out.println(getName());
+        System.out.println("\nStatystyki:");
+        this.getStatsInfo(true);
+        System.out.println("\nUlepszenia:");
+        this.getModsInfo(true);
+        System.out.println("\nUmiejętności:");
+        this.getSkillsInfo(true);
+        System.out.println("\n");
     }
 
     // GETTERS
