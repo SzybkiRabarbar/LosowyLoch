@@ -28,4 +28,14 @@ public class Effect {
         content[2] = this.power;
         return content;
     }
+
+    public int getTarget() {
+        return target;
+    }
+    public int getAffects() {
+        return affects;
+    }
+    public int getPower() {
+        return power;
+    }
 }

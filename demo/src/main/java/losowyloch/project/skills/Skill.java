@@ -7,11 +7,15 @@ public class Skill {
     private int charges;
     private int[] damage;
     private ArrayList<Effect> effects;
+    private float accuracy;
+    private float critChance;
 
-    public Skill(String name, int charges, int[] damage, ArrayList<Effect> effects) {
+    public Skill(String name, int charges, int[] damage, float accuracy, float critChance, ArrayList<Effect> effects) {
         this.name = name;
         this.charges = charges;
         this.damage = damage;
+        this.accuracy = accuracy;
+        this.critChance = critChance;
         this.effects = effects;
     }
 
@@ -40,6 +44,12 @@ public class Skill {
     }
     public int[] getDamage() {
         return damage;
+    } 
+    public float getAccuracy() {
+        return accuracy;
+    }
+    public float getCritChance() {
+        return critChance;
     }
     public ArrayList<Effect> getEffects() {
         return effects;

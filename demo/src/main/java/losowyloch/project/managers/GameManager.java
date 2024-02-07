@@ -18,7 +18,7 @@ public class GameManager {
         System.out.println("\nStatystyki:");
         enemy.getStatsInfo(true);
         System.out.println("\nUmiejętności:");
-        enemy.getSkillsInfo(true);
+        enemy.getSkillsInfo(true, true);
         System.out.println("\n");
     }
 
