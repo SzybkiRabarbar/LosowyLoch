@@ -81,7 +81,7 @@ public class Entity {
         String[] skillsInfo = new String[ln];
         for (int i = 0; i < ln; i++) {
             Skill currSkill = skills.get(i);
-            skillsInfo[i] = "\n" + currSkill.getInfo();
+            skillsInfo[i] = currSkill.getInfo() + "\n";
             if (print) {
                 System.out.println(skillsInfo[i]);
             }
@@ -160,5 +160,8 @@ public class Entity {
     }
     public ArrayList<Skill> getModdedSkills() {
         return moddedSkills;
+    }
+    public Skill getModdedSkillWithId(int index) {
+        return moddedSkills.get(index);
     }
 }

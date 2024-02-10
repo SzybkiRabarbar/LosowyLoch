@@ -34,6 +34,8 @@ public class Skill {
         return this.name + "\n" +
                "Ilość użyć: " + this.charges + "\n" +
                "Obrażenia: " + damage[0] + "-" + damage[1] + "\n" +
+               "Celność: " + (int) (this.accuracy * 100) + "%\n" +
+               "Szansa na trafienie krytyczne: " + (int) (this.critChance * 100) + "%\n" +
                "Efekty:" + effectsInfo;
     }
     public String getName() {

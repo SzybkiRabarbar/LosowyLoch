@@ -45,7 +45,8 @@ public class GameManager {
             switch (input) {
                 case 'f':
                     System.out.println("Walka z " + enemy.getName() + "\n");
-                    // TODO FigthManager
+                    FightManager fight = new FightManager(player, enemy);
+                    fight.fightLoop();
                     enemy = announceAndGetEnemy();  // Nowy przecinik po wygranej walce
                     break;
                 case 'v':
