@@ -15,18 +15,18 @@ class EffectCreator {
 
     public Effect create() {
         int target;
-        int mult;
+        int sign;
         boolean isGood = random.nextBoolean();
         if (isGood) {
             target = this.master;
-            mult = 1;
+            sign = 1;
         } else {
             target = this.master == 0 ? 1 : 0;
-            mult = -1;
+            sign = -1;
         }
         int affects = random.nextInt(6);
         int bound = this.lvl > 20 ? 20 : this.lvl; 
-        int power = (random.nextInt(bound) + 1) * mult;
+        int power = (random.nextInt(bound) + 1) * sign;
         return new Effect(target, affects, power);
     }
 }

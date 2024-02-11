@@ -19,7 +19,7 @@ public class Skill {
         this.effects = effects;
     }
 
-    public boolean useCharges() {
+    public boolean useChargeAndCheckIfUtilized() {
         this.charges--;
         return this.charges == 0;
     }
