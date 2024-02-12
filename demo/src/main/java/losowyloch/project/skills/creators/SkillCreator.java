@@ -79,7 +79,11 @@ public class SkillCreator {
         String name = createName();
         int[] damage = createDamage();
         int charges = random.nextInt(11 + this.lvl) + 5 + this.lvl;
+        float minAc = 0.35f;
+        float maxAc = 0.7f;
+        float accuracy = minAc + random.nextFloat() * (maxAc - minAc);
+        float critChance = random.nextFloat() * 0.5f;
         ArrayList<Effect> effects = createEffects();
-        return new Skill(name, charges, damage, effects);
+        return new Skill(name, charges, damage, accuracy, critChance, effects);
     }
 }

@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import javafx.util.Pair;
 import losowyloch.project.skills.Skill;
 
-class Entity {
+public class Entity {
     private String name;
     private int lvl = 3;
     private int strength;
@@ -17,7 +17,8 @@ class Entity {
     private int defence;
     private int endurance;
     private int luck;
-    private ArrayList<Skill> skills = new ArrayList<>();
+    private ArrayList<Skill> orginalSkills = new ArrayList<>();
+    private ArrayList<Skill> moddedSkills = new ArrayList<>();
     private HashMap<Character, Pair<Supplier<Integer>, Consumer<Integer>>> statMethods;
     private static String[] statNames = new String[] {
         "Siła", "Inteligencja", "Zwinność",
@@ -48,16 +49,16 @@ class Entity {
     
     // SKILLS
     public void addSkill(Skill skill) {
-        skills.add(skill);
+        orginalSkills.add(skill);
     }
     public void removeSkill(Skill skill) {
-        skills.remove(skill);
+        orginalSkills.remove(skill);
     }
     public ArrayList<Skill> checkSkillsCharges() {
         ArrayList<Skill> result = new ArrayList<>();
-        for (int i = 0; i < skills.size(); i++) {
-            if (skills.get(i).getCharges() <= 0) {
-                result.add(skills.remove(i));
+        for (int i = 0; i < orginalSkills.size(); i++) {
+            if (orginalSkills.get(i).getCharges() <= 0) {
+                result.add(orginalSkills.remove(i));
             }
         }
         return result;
@@ -74,12 +75,13 @@ class Entity {
         return statsInfo;
     }
 
-    public String[] getSkillsInfo(boolean print) {
-        int ln = this.skills.size();
+    public String[] getSkillsInfo(boolean orginal, boolean print) {
+        ArrayList<Skill> skills = orginal ? this.orginalSkills : this.moddedSkills;
+        int ln = skills.size();
         String[] skillsInfo = new String[ln];
         for (int i = 0; i < ln; i++) {
             Skill currSkill = skills.get(i);
-            skillsInfo[i] = "\n" + currSkill.getInfo();
+            skillsInfo[i] = currSkill.getInfo() + "\n";
             if (print) {
                 System.out.println(skillsInfo[i]);
             }
@@ -111,6 +113,9 @@ class Entity {
     }
     public void setLuck(int luck) {
         this.luck = luck;
+    }
+    public void setModdedSkills(ArrayList<Skill> moddedSkills) {
+        this.moddedSkills = moddedSkills;
     }
 
     // GETTERS
@@ -150,7 +155,13 @@ class Entity {
     public int getLuck() {
         return luck;
     }
-    public ArrayList<Skill> getSkills() {
-        return skills;
+    public ArrayList<Skill> getOrginalSkills() {
+        return orginalSkills;
+    }
+    public ArrayList<Skill> getModdedSkills() {
+        return moddedSkills;
+    }
+    public Skill getModdedSkillWithId(int index) {
+        return moddedSkills.get(index);
     }
 }

@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class UiHelper {
     private Scanner scanner;
-    private int terminalHeight = 100;
     
     public UiHelper() {
         this.scanner = new Scanner(System.in);
@@ -13,9 +12,9 @@ public class UiHelper {
 
     public void clearTerminal() {
         try {
-            for (int i = 0; i < terminalHeight; i++) {
-                System.out.println();
-            }
+            System.out.println();
+            new ProcessBuilder("powershell", "/c", "\"Write-Host ('-' * $Host.UI.RawUI.BufferSize.Width)\"").inheritIO().start().waitFor();
+            System.out.println();
             new ProcessBuilder("powershell", "/c", "\"Write-Host ('-' * $Host.UI.RawUI.BufferSize.Width)\"").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -39,5 +38,8 @@ public class UiHelper {
         }
         System.out.println("Złe dane wejściowe! Wpisz znak z pomiedzy nawiasów żeby wybrać opcje!\n");
         return this.showAndCollectInput(msgs, validInputs);
+    }
+    public Scanner getScanner() {
+        return scanner;
     }
 }
