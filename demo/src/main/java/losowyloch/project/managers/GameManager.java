@@ -15,21 +15,21 @@ public class GameManager {
 
     private void showInfoAboutEnemy(Enemy enemy) {
         System.out.println(enemy.getName());
-        System.out.println("\nStatystyki:");
+        System.out.println("\n* Statystyki:");
         enemy.getStatsInfo(true);
-        System.out.println("\nUmiejętności:");
+        System.out.println("\n* Umiejętności:");
         enemy.getSkillsInfo(true, true);
         System.out.println("\n");
     }
 
     private Enemy announceAndGetEnemy(){
-        Enemy enemy = enemyCreator.create(player.getLvl(), player.getGlory()); 
+        Enemy enemy = enemyCreator.create(this.player.getLvl(), this.player.getGlory()); 
         System.out.println("Następny przeciwnik: " + enemy.getName() + "\n");
         return enemy;
     }
 
     public void mainLoop() {
-        System.out.println("Rozpoczęcie rozgrywki jako " + player.getName() + "\n");
+        System.out.println("Rozpoczęcie rozgrywki jako " + this.player.getName() + "\n");
         Enemy enemy = this.announceAndGetEnemy();
         boolean isRunnig = true;
         while (isRunnig) {
@@ -37,7 +37,7 @@ public class GameManager {
                 "Wybierz co chcesz zrobić:",
                 "(f) Walcz z " + enemy.getName(),
                 "(v) Zobacz statystyki następnego przeciwnika",
-                "(g) Zwiększ chwałe o " + player.getLvl(),
+                "(g) Zwiększ chwałe o " + this.player.getLvl(),
                 "(b) Zobacz swoje statystyki",
                 "(q) Wyjdź z programu",
             };
@@ -45,18 +45,19 @@ public class GameManager {
             switch (input) {
                 case 'f':
                     System.out.println("Walka z " + enemy.getName() + "\n");
-                    FightManager fight = new FightManager(player, enemy);
+                    FightManager fight = new FightManager(this.player, enemy);
                     fight.fightLoop();
-                    enemy = announceAndGetEnemy();  // Nowy przecinik po wygranej walce
+                    // TODO sklep
+                    enemy = announceAndGetEnemy();
                     break;
                 case 'v':
                     System.out.println("Informacje o następnym przeciwniku\n");
                     this.showInfoAboutEnemy(enemy);
                     break;
                 case 'g':
-                    player.addGlory(player.getLvl());
-                    System.out.println("Dodano " + player.getLvl() + " chwały\nAktualnie posiadasz "
-                                       + player.getGlory() + " chwały\n");
+                    this.player.addGlory(this.player.getLvl());
+                    System.out.println("Dodano " + this.player.getLvl() + " chwały\nAktualnie posiadasz "
+                                       + this.player.getGlory() + " chwały\n");
                     enemy = this.announceAndGetEnemy();
                     break;
                 case 'b':

@@ -7,8 +7,8 @@ import losowyloch.project.UiHelper;
 public class Player extends Entity {
     private final int id;
     private int exp = 0;
-    private int expThreshold = 1;
-    private int currency = 0;
+    private int expThreshold = 9;
+    private int currency = 9;
     private int glory = 0;
     private ArrayList<Mod> mods = new ArrayList<>();
     private UiHelper ui = new UiHelper();
@@ -59,6 +59,10 @@ public class Player extends Entity {
         return used;
     }
 
+    public void addCurrency(int gain) {
+        this.currency += gain;
+    }
+
     public boolean subtractCurrency(int number) {
         if (this.currency >= number) {
             this.currency -= number;
@@ -104,12 +108,16 @@ public class Player extends Entity {
         return modsInfo;
     }
     public void showInfo(){
-        System.out.println(getName());
-        System.out.println("\nStatystyki:");
+        System.out.println("Postać:" + getName());
+        System.out.println("Poziom " + (this.getLvl() - 2));
+        System.out.println("\n* Doświadczenie: " + this.exp + "/" + this.expThreshold);
+        System.err.println("* Złoto: " + this.currency);
+        System.out.println("* Chwała: " + this.glory);
+        System.out.println("\n* Statystyki:\n");
         this.getStatsInfo(true);
-        System.out.println("\nUlepszenia:");
+        System.out.println("\n* Ulepszenia:\n");
         this.getModsInfo(true);
-        System.out.println("\nUmiejętności:");
+        System.out.println("\n* Umiejętności:\n");
         this.getSkillsInfo(true, true);
         System.out.println("\n");
     }

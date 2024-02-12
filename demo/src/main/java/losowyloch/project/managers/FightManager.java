@@ -20,6 +20,7 @@ public class FightManager {
         "Zwięszenie szans na trafienie krytyczne: ",
     };
     private UiHelper ui = new UiHelper();
+    private Player player;
     private Entity[] entities = new Entity[2];  // 0 - Player, 1 - Enemy
     private Random random = new Random();
     private int[] health = new int[2];
@@ -34,6 +35,7 @@ public class FightManager {
     private int def = 1;  // defender
 
     public FightManager(Player player, Enemy enemy) {
+        this.player = player;
         entities[0] = player;
         entities[1] = enemy;
         this.calculateSkillsModifiers(entities[0], 0);
@@ -42,7 +44,7 @@ public class FightManager {
 
     private void calculateSkillsModifiers(Entity entity, int id) {
         int lvlCap = (75 + entity.getLvl() * 5);
-        this.health[id] = lvlCap - 50 + (entity.getVitality() * 6) + (entity.getEndurance() * 3);
+        this.health[id] = lvlCap - 60 + (entity.getVitality() * 6) + (entity.getEndurance() * 3);
 
         float dM = (float) (entity.getStrength() * 5 + entity.getIntellect() * 1) / lvlCap;
         this.damageMult[id] = dM > 0.5f ? 0.5f : dM;
@@ -196,6 +198,36 @@ public class FightManager {
         }
     }
 
+    private void playerPrize() {
+        int lvl = this.player.getLvl();
+
+        int currency = this.player.getGlory() + lvl + random.nextInt(lvl);
+        this.player.addCurrency(currency);
+
+        int exp = lvl;
+        for (int i = 0; i < this.player.getGlory(); i++) {
+            if (random.nextBoolean()) { exp += 1; }
+        }
+        boolean lvlUp = this.player.gainExp(exp);
+
+        int glory = random.nextInt(lvl) + lvl;
+        this.player.addGlory(glory);
+
+        System.out.println("Otrzymano:");
+        System.out.println("    " + currency + " złota");
+        System.out.println("    " + exp + " doświadczenia");
+        System.out.println("    " + glory + " chwały\n");
+
+        if (lvlUp) {
+            this.player.addGlory(this.player.getLvl());
+            this.player.addCurrency(this.player.getGlory());
+            System.out.println("Udało ci się zdobyć " + (this.player.getLvl() - 2) + " poziom!");
+            System.out.println("Otrzymujesz dodatkowe " + this.player.getGlory() + " złota! \n");
+            System.out.println("Otrzymujesz punkt umiejętności!");
+            player.addStat();
+        }
+    }
+
     public void fightLoop() {
         boolean playerAlive = true;
         boolean enemyAlive = true;
@@ -224,10 +256,13 @@ public class FightManager {
         }
         if (playerAlive) {
             System.out.println(entities[0].getName() + " wygrywa!\n");
-            System.out.println("Nagrody!\n");  // TODO
+            this.playerPrize();
         } else {
             System.out.println(entities[1].getName() + " wygrywa!\n");
             System.out.println("Koniec gry!\n");  // TODO
+            System.exit(0);
         }
-    }
+        System.out.println("Naciśnij dowolny przycisk aby kontynuować...\n");
+        this.ui.getScanner().nextLine();
+}
 }
