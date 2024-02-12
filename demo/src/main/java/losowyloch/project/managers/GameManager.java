@@ -1,7 +1,10 @@
 package losowyloch.project.managers;
 
+import java.util.ArrayList;
+
 import losowyloch.project.UiHelper;
 import losowyloch.project.entities.Enemy;
+import losowyloch.project.entities.Mod;
 import losowyloch.project.entities.Player;
 import losowyloch.project.entities.creators.EnemyCreator;
 
@@ -48,6 +51,10 @@ public class GameManager {
                     FightManager fight = new FightManager(this.player, enemy);
                     boolean playerWin = fight.fightLoop();
                     if (playerWin) {
+                        ArrayList<Mod> used = this.player.useModsDurability();
+                        for (Mod mod : used) {
+                            System.out.println("Przedmiot " + mod.getName() + " został zużyty!\n");
+                        }
                         ShopManager shop = new ShopManager(this.player);
                         shop.shopLoop();
                         enemy = announceAndGetEnemy();

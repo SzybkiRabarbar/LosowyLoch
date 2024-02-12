@@ -3,7 +3,9 @@ package losowyloch.project.managers;
 import java.util.Random;
 
 import losowyloch.project.UiHelper;
+import losowyloch.project.entities.Mod;
 import losowyloch.project.entities.Player;
+import losowyloch.project.entities.creators.ModCreator;
 import losowyloch.project.skills.Skill;
 import losowyloch.project.skills.creators.SkillCreator;
 
@@ -16,11 +18,15 @@ public class ShopManager {
     private int[] skillsPrizes = new int[4];
     private Skill[] skills = new Skill[4];
     private String[] skillsMsgs = new String[5];
+    private ModCreator modCreator;
+    private Mod[] mods = new Mod[5];
+    private String[] modsMsgs = new String[6];
 
     ShopManager(Player player) {
         this.player = player;
         this.lvl = player.getLvl();
         this.generateSkills();
+        this.generateMods();
     }
 
     private void generateSkills() {
@@ -31,6 +37,15 @@ public class ShopManager {
             this.skillsMsgs[i] = "\n(" + (i + 1) + ") Kup za " + this.skillsPrizes[i] + ": \n" + this.skills[i].getInfo();
         }
         this.skillsMsgs[4] = "\n(q) Wróc do sklepu";
+    }
+
+    private void generateMods() {
+        this.modCreator = new ModCreator(this.lvl);
+        for (int i = 0; i < 5; i++) {
+            this.mods[i] = this.modCreator.create();
+            this.modsMsgs[i] = "\n(" + (i + 1) + ") Cena: " + this.mods[i].getPrize() + "\n" + this.mods[i].getInfo();
+        }
+        this.modsMsgs[5] = "\n(q) Wróc do sklepu";
     }
 
     private void noMoneyMsg() {
@@ -61,9 +76,29 @@ public class ShopManager {
         }
     }
         
+    private void buyMod(int id) {
+        if (player.subtractCurrency(this.mods[id].getPrize())) {
+            player.addMod(this.mods[id]);
+            System.out.println("Kupiono " + this.mods[id].getName() + "!\n");
+
+            this.mods[id] = this.modCreator.create();
+            this.modsMsgs[id] = "(" + (id + 1) + ") Cena: " + this.mods[id].getPrize() + "\n" + this.mods[id].getInfo();
+        } else {
+            this.noMoneyMsg();
+        }
+    }
+
     private void modsAisle() {
         System.out.println("Kup przedmioty!");
         System.out.println("Złoto: " + player.getCurrency() + "\n");
+        while (true) {
+            System.out.println("Złoto: " + player.getCurrency());
+            char input = this.ui.showAndCollectInput(this.modsMsgs, "12345q".toCharArray());
+            if (input == 'q') {break;}
+            int index = (int) (input - '0') - 1;
+            this.buyMod(index);
+        }
+
 
     }
 
@@ -78,13 +113,13 @@ public class ShopManager {
 
     private void statAisle() {
         System.out.println("Kup statystyki!");
-        System.out.println("Złoto: " + player.getCurrency() + "\n");
         String[] msgs = new String[] {
             "",
             "(q) Wróć do sklepu",
         };
         boolean isLoop = true;
         while (isLoop) {
+            System.out.println("Złoto: " + player.getCurrency() + "\n");
             msgs[0] = "(a) Kup statysyke za " + this.player.getPointPrize();
             char input = this.ui.showAndCollectInput(msgs, "aq".toCharArray());
             switch (input) {
