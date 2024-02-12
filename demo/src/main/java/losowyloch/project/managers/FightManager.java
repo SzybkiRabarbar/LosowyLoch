@@ -105,10 +105,10 @@ public class FightManager {
             System.out.println("Twoja tura!\nWybierz umiejętność:\n");
             char[] validChars = new char[skillsInfo.length];
             for (int i = 0; i < skillsInfo.length; i++) {
-                skillsInfo[i] = "(" + i + ") " + skillsInfo[i];
-                validChars[i] = (char) ('0' + i);
+                skillsInfo[i] = "(" + (i + 1) + ") " + skillsInfo[i];
+                validChars[i] = (char) ('0' + (i + 1));
             }
-            chosenSkill = (int) this.ui.showAndCollectInput(skillsInfo, validChars) - '0';
+            chosenSkill = (int) (this.ui.showAndCollectInput(skillsInfo, validChars) - '0') - 1;
         } else {
             System.out.println("Tura przeciwnika!\n");
             chosenSkill = random.nextInt(skillsInfo.length);
@@ -153,6 +153,7 @@ public class FightManager {
             this.skillsModifiers[eff.getAffects()][eff.getTarget()] *= modifier;
         }
 
+        System.out.println();
         return damageDealt;
 
     }
@@ -228,7 +229,7 @@ public class FightManager {
         }
     }
 
-    public void fightLoop() {
+    public boolean fightLoop() {
         boolean playerAlive = true;
         boolean enemyAlive = true;
         System.out.println(entities[0].getName() + " | " + health[0] + "  hp");
@@ -259,10 +260,9 @@ public class FightManager {
             this.playerPrize();
         } else {
             System.out.println(entities[1].getName() + " wygrywa!\n");
-            System.out.println("Koniec gry!\n");  // TODO
-            System.exit(0);
         }
         System.out.println("Naciśnij dowolny przycisk aby kontynuować...\n");
         this.ui.getScanner().nextLine();
+        return playerAlive;
 }
 }

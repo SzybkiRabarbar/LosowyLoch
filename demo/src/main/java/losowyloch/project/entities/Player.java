@@ -10,6 +10,7 @@ public class Player extends Entity {
     private int expThreshold = 9;
     private int currency = 9;
     private int glory = 0;
+    private int pointPrize = 1;
     private ArrayList<Mod> mods = new ArrayList<>();
     private UiHelper ui = new UiHelper();
 
@@ -61,6 +62,10 @@ public class Player extends Entity {
 
     public void addCurrency(int gain) {
         this.currency += gain;
+    }
+
+    public void addPointPrize() {
+        this.pointPrize += 1;
     }
 
     public boolean subtractCurrency(int number) {
@@ -134,5 +139,8 @@ public class Player extends Entity {
     }
     public int getGlory() {
         return glory;
+    }
+    public int getPointPrize() {
+        return pointPrize;
     }
 }
