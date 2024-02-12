@@ -1,7 +1,10 @@
 package losowyloch.project.managers;
 
+import java.util.ArrayList;
+
 import losowyloch.project.UiHelper;
 import losowyloch.project.entities.Enemy;
+import losowyloch.project.entities.Mod;
 import losowyloch.project.entities.Player;
 import losowyloch.project.entities.creators.EnemyCreator;
 
@@ -35,32 +38,44 @@ public class GameManager {
         while (isRunnig) {
             String[] loopMsg = new String[] {
                 "Wybierz co chcesz zrobić:",
-                "(f) Walcz z " + enemy.getName(),
-                "(v) Zobacz statystyki następnego przeciwnika",
-                "(g) Zwiększ chwałe o " + this.player.getLvl(),
-                "(b) Zobacz swoje statystyki",
+                "(a) Walcz z " + enemy.getName(),
+                "(s) Zobacz statystyki następnego przeciwnika",
+                "(d) Zwiększ chwałe o " + this.player.getLvl(),
+                "(f) Zobacz swoje statystyki",
                 "(q) Wyjdź z programu",
             };
-            char input = ui.showAndCollectInput(loopMsg, "fvgbq".toCharArray());
+            char input = ui.showAndCollectInput(loopMsg, "asdfq".toCharArray());
             switch (input) {
-                case 'f':
+                case 'a':
                     System.out.println("Walka z " + enemy.getName() + "\n");
                     FightManager fight = new FightManager(this.player, enemy);
-                    fight.fightLoop();
-                    // TODO sklep
-                    enemy = announceAndGetEnemy();
+                    boolean playerWin = fight.fightLoop();
+                    if (playerWin) {
+                        ArrayList<Mod> used = this.player.useModsDurability();
+                        for (Mod mod : used) {
+                            System.out.println("Przedmiot " + mod.getName() + " został zużyty!\n");
+                        }
+                        ShopManager shop = new ShopManager(this.player);
+                        shop.shopLoop();
+                        enemy = announceAndGetEnemy();
+                        // TODO rezapis postaci
+                    } else {
+                        // TODO usuwanie postaci
+                        System.out.println("Koniec gry!\n");
+                        System.exit(0);
+                    }
                     break;
-                case 'v':
+                case 's':
                     System.out.println("Informacje o następnym przeciwniku\n");
                     this.showInfoAboutEnemy(enemy);
                     break;
-                case 'g':
+                case 'd':
                     this.player.addGlory(this.player.getLvl());
                     System.out.println("Dodano " + this.player.getLvl() + " chwały\nAktualnie posiadasz "
                                        + this.player.getGlory() + " chwały\n");
                     enemy = this.announceAndGetEnemy();
                     break;
-                case 'b':
+                case 'f':
                     System.out.println("Informacje o postaci\n");
                     this.player.showInfo();
                     break;

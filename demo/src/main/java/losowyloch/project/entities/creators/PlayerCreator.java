@@ -14,15 +14,15 @@ public class PlayerCreator {
     }
 
     private String pickName() {
-        String[] names = new String[10];
-        String[] msgs = new String[10];
-        for (int i = 0; i < 10; i++) {
+        String[] names = new String[9];
+        String[] msgs = new String[9];
+        for (int i = 0; i < 9; i++) {
             String[] adjectiveWithNoun = RandomWordPicker.getRandomWords('r');
             names[i] = adjectiveWithNoun[0] + " " + adjectiveWithNoun[1];
-            msgs[i] = "(" + i + ") " + adjectiveWithNoun[0] + " " + adjectiveWithNoun[1];
+            msgs[i] = "(" + (i + 1) + ") " + adjectiveWithNoun[0] + " " + adjectiveWithNoun[1];
         }
-        char input = ui.showAndCollectInput(msgs, "0123456789".toCharArray()); 
-        int picked = input - '0';
+        char input = ui.showAndCollectInput(msgs, "123456789".toCharArray()); 
+        int picked = (int) (input - '0') - 1;
         return names[picked];
     }
 
@@ -36,20 +36,20 @@ public class PlayerCreator {
     private void addSkills(Player player) {
         SkillCreator skillCreator = new SkillCreator(player.getLvl(), 0);
         System.out.println("Wybór umiejętności!\n");
-        Skill[] currSkills = new Skill[6];
-        String[] currMsgs = new String[6];
+        Skill[] currSkills = new Skill[5];
+        String[] currMsgs = new String[5];
 
         for (int i = 0; i < 3; i++) {
             int showNumber = i + 1;
             System.out.println("Wybierz " + showNumber + " z 3 umiejętności z listy:\n");
 
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < 5; j++) {
                 Skill currSkill = skillCreator.create();
                 currSkills[j] = currSkill;
-                currMsgs[j] = "\n(" + j + ") " + currSkill.getInfo();
+                currMsgs[j] = "\n(" + (j + 1) + ") " + currSkill.getInfo();
             }
-            char input = ui.showAndCollectInput(currMsgs, "012345".toCharArray());
-            Skill pickedSkill = currSkills[input - '0'];
+            char input = ui.showAndCollectInput(currMsgs, "12345".toCharArray());
+            Skill pickedSkill = currSkills[(int) (input - '0') - 1];
             System.out.println("Wybrałeś " + pickedSkill.getName() + "!\n");
 
             player.addSkill(pickedSkill);

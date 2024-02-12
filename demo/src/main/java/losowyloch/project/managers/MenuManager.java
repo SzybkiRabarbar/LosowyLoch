@@ -1,16 +1,16 @@
-package losowyloch.project;
+package losowyloch.project.managers;
 
 import java.util.ArrayList;
 
+import losowyloch.project.UiHelper;
 import losowyloch.project.entities.Player;
 import losowyloch.project.entities.creators.PlayerCreator;
-import losowyloch.project.managers.GameManager;
 
-public class Menu {
+public class MenuManager {
     private ArrayList<Player> players;
     private UiHelper ui;
 
-    public Menu(ArrayList<Player> players) {
+    public MenuManager(ArrayList<Player> players) {
         this.players = players;
         this.ui = new UiHelper();
     }
