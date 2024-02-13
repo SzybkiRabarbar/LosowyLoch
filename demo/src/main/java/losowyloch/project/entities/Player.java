@@ -2,6 +2,10 @@ package losowyloch.project.entities;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import losowyloch.project.UiHelper;
 
 public class Player extends Entity {
@@ -19,10 +23,14 @@ public class Player extends Entity {
         this.id = id;
     }
 
-    public ArrayList<Mod> getMods() {
-        return mods;
+    @JsonCreator
+    public Player(@JsonProperty("name") String name, @JsonProperty("id") int id) {
+        super(name);
+        this.id = id;
     }
-
+    
+    // METHODS
+    
     public void addMod(Mod mod) {
         mods.add(mod);
         ArrayList<Character> statChars = mod.getStatAffect();
@@ -102,6 +110,7 @@ public class Player extends Entity {
         this.glory += number;
     }
 
+    @JsonIgnore
     public String[] getModsInfo(boolean print) {
         String[] modsInfo = new String[mods.size()];
         for (int i = 0; i < modsInfo.length; i++) {
@@ -127,9 +136,32 @@ public class Player extends Entity {
         System.out.println("\n");
     }
 
+    // SETTERS
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+    public void setExpThreshold(int expThreshold) {
+        this.expThreshold = expThreshold;
+    }
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+    public void setGlory(int glory) {
+        this.glory = glory;
+    }
+    public void setPointPrize(int pointPrize) {
+        this.pointPrize = pointPrize;
+    }
+    public void setMods(ArrayList<Mod> mods) {
+        this.mods = mods;
+    }
+
     // GETTERS
     public int getId() {
         return id;
+    }
+    public int getExpThreshold() {
+        return expThreshold;
     }
     public int getExp() {
         return exp;
@@ -142,5 +174,8 @@ public class Player extends Entity {
     }
     public int getPointPrize() {
         return pointPrize;
+    }
+    public ArrayList<Mod> getMods() {
+        return mods;
     }
 }
