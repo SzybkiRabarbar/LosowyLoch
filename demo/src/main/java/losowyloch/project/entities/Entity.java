@@ -54,6 +54,9 @@ public class Entity {
     public void removeSkill(Skill skill) {
         orginalSkills.remove(skill);
     }
+    public void removeSkillById(int id) {
+        orginalSkills.remove(id);
+    }
     public ArrayList<Skill> checkSkillsCharges() {
         ArrayList<Skill> result = new ArrayList<>();
         for (int i = 0; i < orginalSkills.size(); i++) {

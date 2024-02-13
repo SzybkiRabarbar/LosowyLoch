@@ -122,7 +122,7 @@ public class Player extends Entity {
         this.getStatsInfo(true);
         System.out.println("\n* Ulepszenia:\n");
         this.getModsInfo(true);
-        System.out.println("\n* Umiejętności:\n");
+        System.out.println("\n* Umiejętności (" + getOrginalSkills().size() + "/6):\n");
         this.getSkillsInfo(true, true);
         System.out.println("\n");
     }

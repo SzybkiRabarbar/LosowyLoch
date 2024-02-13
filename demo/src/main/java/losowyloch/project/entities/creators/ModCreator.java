@@ -97,9 +97,9 @@ public class ModCreator {
         String name = adjective + " " + modsNames[nameId];
         int points = (int) ((random.nextFloat() + 0.5f) * this.lvl) + 2;
         int prize = (int) ((random.nextFloat() + 0.5f) * points) + 2;
-        int durability = random.nextInt(5) + 2;
+        int durability = random.nextInt(4) + 2;
         Collections.shuffle(this.affectNames);
-        Character[] affect = new Character[random.nextInt(4) + 1];
+        Character[] affect = new Character[random.nextInt(3) + 1];
         for (int i = 0; i < affect.length; i++) {
             affect[i] = this.affectNames.get(i);
         }

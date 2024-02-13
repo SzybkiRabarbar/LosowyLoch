@@ -53,7 +53,9 @@ public class ShopManager {
     }
 
     private void buySkill(int id) {
-        if (player.subtractCurrency(this.skillsPrizes[id])) {
+        if (player.getOrginalSkills().size() >= 6) {
+            System.out.println("Postać posiada maksymalną liczbę umiejętności! Przed kupnem kolejnej usuń/zużyj inną\n");
+        } else if (player.subtractCurrency(this.skillsPrizes[id])) {
             player.addSkill(this.skills[id]);
             System.out.println("Kupiono umiejętność " + this.skills[id].getName() + "!\n");
 
@@ -68,11 +70,31 @@ public class ShopManager {
     private void skillAisle() {
         System.out.println("Kup umiejętności!");
         while (true) {
+            System.out.println("Ilość posiadanych umiejetności: " + this.player.getOrginalSkills().size() + "/6");
             System.out.println("Złoto: " + player.getCurrency());
             char input = this.ui.showAndCollectInput(skillsMsgs, "1234q".toCharArray());
             if (input == 'q') {break;}
             int index = (int) (input - '0') - 1;
             this.buySkill(index);
+        }
+    }
+
+    private void skillRemovalAisle() {
+        System.out.println("Usuń umiejętność!\nWybierz umiejętność do usunięcia:\n");
+        while (true) {
+            String[] msgs = this.player.getSkillsInfo(true, false);
+            String validInps = "q";
+
+            for (int i = 0; i < msgs.length; i++) {
+                msgs[i] = "(" + (i + 1) + ") " + msgs[i];
+                validInps += (i + 1);
+            }
+            System.out.println("Posiadasz " + this.player.getOrginalSkills().size() + "/6 umiejętności\n");
+            System.out.println("(q) Wróć do sklepu\n");
+            char input = this.ui.showAndCollectInput(msgs, validInps.toCharArray());
+            if (input == 'q') {break;}
+            int index = (int) (input - '0') - 1;
+            this.player.removeSkillById(index);
         }
     }
         
@@ -82,7 +104,7 @@ public class ShopManager {
             System.out.println("Kupiono " + this.mods[id].getName() + "!\n");
 
             this.mods[id] = this.modCreator.create();
-            this.modsMsgs[id] = "(" + (id + 1) + ") Cena: " + this.mods[id].getPrize() + "\n" + this.mods[id].getInfo();
+            this.modsMsgs[id] = "\n(" + (id + 1) + ") Cena: " + this.mods[id].getPrize() + "\n" + this.mods[id].getInfo();
         } else {
             this.noMoneyMsg();
         }
@@ -90,7 +112,6 @@ public class ShopManager {
 
     private void modsAisle() {
         System.out.println("Kup przedmioty!");
-        System.out.println("Złoto: " + player.getCurrency() + "\n");
         while (true) {
             System.out.println("Złoto: " + player.getCurrency());
             char input = this.ui.showAndCollectInput(this.modsMsgs, "12345q".toCharArray());
@@ -143,11 +164,12 @@ public class ShopManager {
             "(s) Przedmioty",
             "(d) Punkty statystyk",
             "(f) Zobacz informacje o swojej postaci",
+            "(g) Usuń umiejętność",
             "(q) Wyjdź ze sklepu"
         };
         boolean isLoop = true;
         while (isLoop) {
-            char input = this.ui.showAndCollectInput(msgs, "asdfq".toCharArray());
+            char input = this.ui.showAndCollectInput(msgs, "asdfgq".toCharArray());
             switch (input) {
                 case 'a':
                     this.skillAisle();
@@ -160,6 +182,9 @@ public class ShopManager {
                     break;
                 case 'f':
                     this.player.showInfo();
+                    break;
+                case 'g':
+                    this.skillRemovalAisle();
                     break;
                 case 'q':
                     isLoop = false;

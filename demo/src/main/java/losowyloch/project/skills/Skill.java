@@ -21,7 +21,7 @@ public class Skill {
 
     public boolean useChargeAndCheckIfUtilized() {
         this.charges--;
-        return this.charges == 0;
+        return this.charges <= 0;
     }
 
     // GETTERS

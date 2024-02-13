@@ -67,6 +67,17 @@ public class FightManager {
 
     private void createModedSkills() {
         ArrayList<Skill> rawSkills = entities[this.att].getOrginalSkills();
+        if (rawSkills.size() == 0) {
+            ArrayList<Effect> effs = new ArrayList<>();
+            for (int i = 0; i < 6; i++) {
+                effs.add(new Effect(this.att, i, -99));
+                effs.add(new Effect(this.def, i, 100));
+            }
+            Skill lastSkill = new Skill("???", 0, new int[]{1, 1}, 1f, 0f, effs);
+            entities[this.att].addSkill(lastSkill);
+            entities[this.att].setModdedSkills(new ArrayList<>() {{add(lastSkill);}} );
+            return;
+        }
         ArrayList<Skill> moddedSkills = new ArrayList<>();
         for (Skill rawSkill : rawSkills) {
             String mName = rawSkill.getName();
