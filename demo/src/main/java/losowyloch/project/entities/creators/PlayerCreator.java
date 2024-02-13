@@ -3,7 +3,7 @@ package losowyloch.project.entities.creators;
 import losowyloch.project.entities.Player;
 import losowyloch.project.skills.Skill;
 import losowyloch.project.skills.creators.SkillCreator;
-
+import losowyloch.project.NextPlayerIndexReader;
 import losowyloch.project.RandomWordPicker;
 import losowyloch.project.UiHelper;
 
@@ -60,8 +60,9 @@ public class PlayerCreator {
         System.out.println("Wybierz imię dla swojej postaci");
         String name = this.pickName();
         System.out.println("Wybrane Imie to " + name + "!\n");
+        int index = NextPlayerIndexReader.readIndex();
 
-        Player player = new Player(name, new int[]{1,1,1,1,1,1,1}, 0);
+        Player player = new Player(name, new int[]{1,1,1,1,1,1,1}, index);
 
         this.addPoints(player);
         this.addSkills(player);

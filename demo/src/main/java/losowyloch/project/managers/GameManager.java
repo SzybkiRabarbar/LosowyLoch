@@ -2,6 +2,7 @@ package losowyloch.project.managers;
 
 import java.util.ArrayList;
 
+import losowyloch.project.PlayerJsonUtil;
 import losowyloch.project.UiHelper;
 import losowyloch.project.entities.Enemy;
 import losowyloch.project.entities.Mod;
@@ -58,11 +59,11 @@ public class GameManager {
                         ShopManager shop = new ShopManager(this.player);
                         shop.shopLoop();
                         enemy = announceAndGetEnemy();
-                        // TODO rezapis postaci
+                        PlayerJsonUtil.replacePlayerInJsonFile(this.player);
                     } else {
-                        // TODO usuwanie postaci
+                        PlayerJsonUtil.removePlayerFromJsonFile(this.player.getId());
                         System.out.println("Koniec gry!\n");
-                        System.exit(0);
+                        isRunnig = false;
                     }
                     break;
                 case 's':
@@ -73,6 +74,7 @@ public class GameManager {
                     this.player.addGlory(this.player.getLvl());
                     System.out.println("Dodano " + this.player.getLvl() + " chwały\nAktualnie posiadasz "
                                        + this.player.getGlory() + " chwały\n");
+                    PlayerJsonUtil.replacePlayerInJsonFile(this.player);
                     enemy = this.announceAndGetEnemy();
                     break;
                 case 'f':
