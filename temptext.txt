@@ -1,0 +1,237 @@
+Skill
+    - name String
+    - int charges
+    - int[] damage
+    - float accuracy
+    - float critChance
+    - ArrayList<Effect> effects
+--
+    + boolean useChargeAndCheckIfUtilized() 
+    + String getInfo() 
+
+
+Enemy
+--
+
+Entity 
+    - String name
+    - int lvl 
+    - int strength
+    - int intellect
+    - int agility
+    - int vitality
+    - int defence
+    - int endurance
+    - int luck
+    - ArrayList<Skill> orginalSkills 
+    - ArrayList<Skill> moddedSkills 
+    - HashMap<Character, Pair<Supplier<Integer>, Consumer<Integer>>> statMethods 
+    - {static} String[] statNames 
+    - {static} char[] statLabels 
+--
+    + void addSkill(Skill skill) 
+    + void removeSkill(Skill skill) 
+    + void removeSkillById(int id) 
+    + ArrayList<Skill> checkSkillsCharges() 
+    + String[] getStatsInfo(boolean print) 
+    + String[] getSkillsInfo(boolean orginal, boolean print) 
+    + Skill getModdedSkillWithId(int index) 
+
+
+Mod 
+    - String name
+    - int durability
+    - ArrayList<Character> statAffect
+    - ArrayList<Integer> statVals
+    - int prize
+    - {static} HashMap<Character, String> affectNames 
+--
+    + boolean useDurability() 
+    + String getInfo() 
+
+
+Player
+    - {final} int id
+    - int exp 
+    - int expThreshold 
+    - int currency 
+    - int glory 
+    - int pointPrize 
+    - ArrayList<Mod> mods 
+    - UiHelper ui 
+--
+    + void addMod(Mod mod) 
+    - void removeMod(Mod mod)
+    + ArrayList<Mod> useModsDurability() 
+    + void addCurrency(int gain) 
+    + void addPointPrize() 
+    + boolean subtractCurrency(int number) 
+    + boolean gainExp(int earnedExp) 
+    + void addStat() 
+    + void addGlory(int number) 
+    + String[] getModsInfo(boolean print) 
+    + void showInfo()
+
+
+Effect 
+    - int target
+    - int affects
+    - int power
+    - {static} String[] labels 
+--
+    + String getInfo() 
+    + int[] getVals() 
+
+
+EnemyCreator 
+    - Random random 
+--
+    - String generateRandomName() 
+    - int[] generateRandomStats(int points) 
+    - void appendsRandomSkills(Enemy enemy) 
+    + Enemy create(int lvl, int glory) 
+
+
+ModCreator 
+    - Random random 
+    - int lvl
+    - {static} String[] modsNames 
+    - {static} boolean[] modsGenderForm 
+    - List<Character> affectNames 
+--
+    + Mod create() 
+
+
+PlayerCreator 
+    - UiHelper ui
+--
+    - String pickName() 
+    - void addPoints(Player player)
+    - void addSkills(Player player) 
+    + Player create()  
+
+
+FightManager 
+    - {static} String[] skillsModsNames 
+    - UiHelper ui 
+    - Player player
+    - Entity[] entities 
+    - Random random 
+    - int[] health 
+    - float[] damageMult 
+    - float[] dmgReduction 
+    - float[] accuracyBuff 
+    - float[] dodgeChance 
+    - float[] effectMult
+    - float[] critBuff 
+    - float[][] skillsModifiers 
+    - int att 
+    - int def 
+--
+    - void calculateSkillsModifiers(Entity entity, int id) 
+    - void createModedSkills() 
+    - Skill chooseSkill() 
+    - void useSkillCharge(Skill moddedSkill) 
+    - int castSkill(Skill skill) 
+    - void showBuffs() 
+    - void endRoundCredits() 
+    - void playerPrize() 
+    + boolean fightLoop() 
+
+
+GameManager 
+    - UiHelper ui 
+    - EnemyCreator enemyCreator 
+    - Player player
+--
+    - void showInfoAboutEnemy(Enemy enemy) 
+    - Enemy announceAndGetEnemy()
+    + void mainLoop() 
+
+
+MenuManager 
+    - UiHelper ui
+    - GameManager gameManager
+--
+    + void startGame() 
+
+
+ShopManager 
+    - UiHelper ui 
+    - Random random 
+    - Player player
+    - int lvl
+    - SkillCreator skillCreator
+    - int[] skillsPrizes 
+    - Skill[] skills 
+    - String[] skillsMsgs 
+    - ModCreator modCreator
+    - Mod[] mods 
+    - String[] modsMsgs 
+--
+    - void generateSkills() 
+    - void noMoneyMsg() 
+    - void skillAisle() 
+    - void skillRemovalAisle() 
+    - void buyMod(int id) 
+    - void modsAisle() 
+    - void buyStat() 
+    - void statAisle() 
+    + void shopLoop() 
+
+
+EffectCreator 
+    - Random random 
+    - int lvl
+    - int master
+--
+    + Effect create() 
+
+
+SkillCreator 
+    - {static} String[] attackNouns 
+    - {static} boolean[] attackGender 
+    - EffectCreator effectCreator
+    - int lvl
+    - Random random 
+--
+    - String createName() 
+    - int[] createDamage() 
+    - ArrayList<Effect> createEffects() 
+    + Skill create() 
+
+
+NextPlayerIndexReader 
+    - {static} {final} String JSON_FILE_PATH
+--
+    + {static} int readIndex() 
+    - {static} void writeNumber(int number) 
+
+
+PlayerJsonUtil 
+    - {static} {final} ObjectMapper objectMapper 
+    - {static} {final} String JSON_FILE_PATH
+--
+    + {static} List<Player> fetchPlayersFromJson() 
+    + {static} void replacePlayerInJsonFile(Player newPlayer) 
+    + {static} void addPlayerToJsonFile(Player newPlayer) 
+    + {static} void removePlayerFromJsonFile(int playerId) 
+
+
+RandomWordPicker 
+    - {static} List<String> adjectivesM 
+    - {static} List<String> nounsM 
+    - {static} List<String> adjectivesW 
+    - {static} List<String> nounsW 
+    - {static} Random random 
+--
+    - {static} void loadWords(String file, List<String> list) 
+    - {static} String capitalizeEachWord(String original) 
+    + {static} String[] getRandomWords(char c) 
+
+
+UiHelper 
+    - Scanner scanner
+--
+    + void clearTerminal() 
+    + char showAndCollectInput(String[] msgs, char[] validInputs) 

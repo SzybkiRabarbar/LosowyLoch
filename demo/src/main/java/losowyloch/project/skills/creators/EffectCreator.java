@@ -8,6 +8,7 @@ class EffectCreator {
     private Random random = new Random();
     private int lvl;
     private int master;
+
     public EffectCreator(int lvl, int master) {
         this.lvl = lvl;
         this.master = master;

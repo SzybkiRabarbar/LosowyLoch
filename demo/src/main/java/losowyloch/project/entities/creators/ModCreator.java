@@ -83,7 +83,6 @@ public class ModCreator {
     };
     private List<Character> affectNames = new ArrayList<>();
 
-
     public ModCreator(int lvl) {
         this.lvl = lvl;
         for (Character character : "siavdel".toCharArray()) {

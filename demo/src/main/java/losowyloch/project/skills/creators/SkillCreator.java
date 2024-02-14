@@ -41,7 +41,7 @@ public class SkillCreator {
     };
     private EffectCreator effectCreator;
     private int lvl;
-    Random random = new Random();
+    private Random random = new Random();
 
     public SkillCreator(int lvl, int master) {
         this.lvl = lvl;

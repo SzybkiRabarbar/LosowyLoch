@@ -8,8 +8,8 @@ import losowyloch.project.skills.creators.SkillCreator;
 
 public class EnemyCreator {
     private Random random = new Random();
-    public EnemyCreator() {
-    }
+
+    public EnemyCreator() {}
 
     private String generateRandomName() {
         String[] randomWords = RandomWordPicker.getRandomWords('r');
@@ -35,7 +35,7 @@ public class EnemyCreator {
     public Enemy create(int lvl, int glory) {
         String name = this.generateRandomName();
         int [] vals = this.generateRandomStats(glory + lvl);
-        Enemy enemy = new Enemy(name, vals, glory);
+        Enemy enemy = new Enemy(name, vals);
         this.appendsRandomSkills(enemy);
         enemy.setLvl(lvl);
         return enemy;

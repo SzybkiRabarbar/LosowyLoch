@@ -13,6 +13,7 @@ public class GameManager {
     private UiHelper ui = new UiHelper();
     private EnemyCreator enemyCreator = new EnemyCreator();
     private Player player;
+
     public GameManager(Player player) {
         this.player = player;
     }
@@ -61,7 +62,7 @@ public class GameManager {
                         enemy = announceAndGetEnemy();
                         PlayerJsonUtil.replacePlayerInJsonFile(this.player);
                     } else {
-                        PlayerJsonUtil.removePlayerFromJsonFile(this.player.getId());
+                        PlayerJsonUtil.removePlayerFromJsonFile(this.player.getID());
                         System.out.println("Koniec gry!\n");
                         isRunnig = false;
                     }
