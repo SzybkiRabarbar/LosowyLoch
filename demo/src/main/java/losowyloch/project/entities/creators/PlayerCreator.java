@@ -9,6 +9,7 @@ import losowyloch.project.UiHelper;
 
 public class PlayerCreator {
     private UiHelper ui;
+
     public PlayerCreator() {
         this.ui = new UiHelper();
     }

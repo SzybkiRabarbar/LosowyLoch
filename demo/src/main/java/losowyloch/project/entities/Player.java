@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import losowyloch.project.UiHelper;
 
 public class Player extends Entity {
-    private final int id;
+    private final int ID;
     private int exp = 0;
     private int expThreshold = 9;
     private int currency = 9;
@@ -20,13 +20,13 @@ public class Player extends Entity {
 
     public Player(String name, int[] vals, int id) {
         super(name, vals);
-        this.id = id;
+        this.ID = id;
     }
 
     @JsonCreator
     public Player(@JsonProperty("name") String name, @JsonProperty("id") int id) {
         super(name);
-        this.id = id;
+        this.ID = id;
     }
     
     // METHODS
@@ -157,8 +157,8 @@ public class Player extends Entity {
     }
 
     // GETTERS
-    public int getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
     public int getExpThreshold() {
         return expThreshold;

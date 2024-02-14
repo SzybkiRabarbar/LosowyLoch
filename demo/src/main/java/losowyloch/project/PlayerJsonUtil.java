@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerJsonUtil {
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String JSON_FILE_PATH;
 
     static {
@@ -42,7 +41,7 @@ public class PlayerJsonUtil {
         List<Player> players = new ArrayList<>();
 
         try {
-            players = objectMapper.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
+            players = OBJECT_MAPPER.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,11 +51,11 @@ public class PlayerJsonUtil {
 
     public static void replacePlayerInJsonFile(Player newPlayer) {
         try {
-            List<Player> players = objectMapper.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
+            List<Player> players = OBJECT_MAPPER.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
             players = players.stream()
-                    .map(player -> player.getId() == newPlayer.getId() ? newPlayer : player)
+                    .map(player -> player.getID() == newPlayer.getID() ? newPlayer : player)
                     .collect(Collectors.toList());
-            objectMapper.writeValue(new File(JSON_FILE_PATH), players);
+            OBJECT_MAPPER.writeValue(new File(JSON_FILE_PATH), players);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,9 +63,9 @@ public class PlayerJsonUtil {
 
     public static void addPlayerToJsonFile(Player newPlayer) {
         try {
-            List<Player> players = objectMapper.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
+            List<Player> players = OBJECT_MAPPER.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
             players.add(newPlayer);
-            objectMapper.writeValue(new File(JSON_FILE_PATH), players);
+            OBJECT_MAPPER.writeValue(new File(JSON_FILE_PATH), players);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,11 +73,11 @@ public class PlayerJsonUtil {
 
     public static void removePlayerFromJsonFile(int playerId) {
         try {
-            List<Player> players = objectMapper.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
+            List<Player> players = OBJECT_MAPPER.readValue(new File(JSON_FILE_PATH), new TypeReference<List<Player>>(){});
             players = players.stream()
-                    .filter(player -> player.getId() != playerId)
+                    .filter(player -> player.getID() != playerId)
                     .collect(Collectors.toList());
-            objectMapper.writeValue(new File(JSON_FILE_PATH), players);
+            OBJECT_MAPPER.writeValue(new File(JSON_FILE_PATH), players);
         } catch (IOException e) {
             e.printStackTrace();
         }
